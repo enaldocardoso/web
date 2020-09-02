@@ -145,33 +145,56 @@ router.patch('/', (req, res, next) => {
 	});
 });
 
-router.delete('/', (req, res, next) => {
-	mysql.getConnection((error, conn ) => {
-		if (error) { return res.status(500).send({ error: error }) }
-		conn.query(
-			`DELETE FROM produtos where id_produto = ?`,
-			[req.body.id_produto],
-			(error, result, field) => {
-				conn.release();
+// router.delete('/', (req, res, next) => {
+// 	res.status(201).send({
+// 		mensagem: 'DELETE rota produtos'
+// 	})
+// 	mysql.getConnection((error, conn ) => {
+// 		if (error) { return res.status(500).send({ error: error }) }
+// 		conn.query(
+// 			`DELETE FROM produtos where id_produto = ?`,
+// 			[req.body.id_produto],
+// 			(error, resultado, field) => {
+// 				conn.release();
 
-				if (error) { return res.status(500).send({ error: error }) }
+// 				if (error) { return res.status(500).send({ error: error, response: null })}
 
-				const response = {
-					mensagem: 'Produto excluído com sucesso',
-					request: {
-						tipo: 'POST',
-						descricao: 'Insere um produto',
-						url: 'http://localhost:3000/produtos',
-						body: {
-							nome: 'String',
-							preco: 'Number'
-						}
-					}
-				}
-				return res.status(202).send(reponse);
-			}
-		)
-	});
-});
+// 				res.status(202).send({
+// 					mensagem: 'Produto excluído com sucesso.',
+// 				});
+// 			}
+// 		)
+// 	});
+// });
+
+//v1
+// router.delete('/', (req, res, next) => {
+// 	mysql.getConnection((error, conn ) => {
+// 		if (error) { return res.status(500).send({ error: error }) }
+// 		conn.query(
+// 			`DELETE FROM produtos where id_produto = ?`,
+// 			[req.body.id_produto],
+// 			(error, result, field) => {
+// 				conn.release();
+
+// 				if (error) { return res.status(500).send({ error: error }) }
+
+// 				const response = {
+// 					mensagem: 'Produto excluído com sucesso',
+// 					// request: {
+// 					// 	tipo: 'POST',
+// 					// 	descricao: 'Insere um produto',
+// 					// 	url: 'http://localhost:3000/produtos',
+// 					// 	body: {
+// 					// 		nome: 'String',
+// 					// 		preco: 'Number'
+// 					// 	}
+// 					// }
+// 				}
+// 				return res.status(202).send(reponse);
+// 			}
+// 		)
+// 	});
+// });
 
 module.exports = router;
