@@ -7,6 +7,7 @@ const rotaPedidos = require('./routes/pedidos');
 const bodyParser = require('body-parser');
 
 app.use(morgan('dev'));
+app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({ extended: false })); //apenas dados simples
 app.use(bodyParser.json());	//json de entrada no body
 app.use((req, res, next) => {
