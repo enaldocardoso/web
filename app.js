@@ -1,10 +1,11 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
+const bodyParser = require('body-parser');
 
 const rotaProdutos = require('./routes/produtos');
 const rotaPedidos = require('./routes/pedidos');
-const bodyParser = require('body-parser');
+const rotaUsuarios = require('./routes/usuarios');
 
 app.use(morgan('dev'));
 app.use('/uploads', express.static('uploads'));
@@ -22,11 +23,12 @@ app.use((req, res, next) => {
 		return res.status(200).send({});
 	}
 	next();
-	
+
 });
 
 app.use('/produtos',rotaProdutos);
 app.use('/pedidos',rotaPedidos);
+app.use('/usuarios',rotaUsuarios);
 
 //Quando não encontra rota.
 app.use((req, res, next) => {
