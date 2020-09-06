@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mysql = require('../mysql').pool;
 const multer = require('multer');
+const login = require('../middleware/login');
 
 //pegar o nome do arquivo
 const storage = multer.diskStorage({
@@ -101,7 +102,7 @@ router.get('/:id_produto', (req, res, next) => {
 
 });
 
-router.post('/', upload.single('produto_imagem'), (req, res, next) => {
+router.post('/', login.obrigatorio, upload.single('produto_imagem'), (req, res, next) => {
 	console.log(req.file);
 	mysql.getConnection((error, conn ) => {
 		if (error) { return res.status(500).send({ error: error }) }
@@ -139,7 +140,7 @@ router.post('/', upload.single('produto_imagem'), (req, res, next) => {
 
 });
 
-router.patch('/', (req, res, next) => {
+router.patch('/', login.obrigatorio, (req, res, next) => {
 
 	mysql.getConnection((error, conn ) => {
 		if (error) { return res.status(500).send({ error: error }) }
@@ -180,7 +181,7 @@ router.patch('/', (req, res, next) => {
 	});
 });
 
-// router.delete('/', (req, res, next) => {
+// router.delete('/',login.obrigatorio, (req, res, next) => {
 // 	res.status(201).send({
 // 		mensagem: 'DELETE rota produtos'
 // 	})
